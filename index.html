@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+        Remove this if you use the .htaccess -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <title>Solar Calculator Demonstration</title>
+        <meta name="description" content="" />
+        <meta name="author" content="theneonlobster" />
+        <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+        <!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <script type="text/javascript" src="calculations.js"></script>
+        <script type="text/javascript" src="populations.js"></script>
+        <script type="text/javascript" src="debugger.js"></script>
+    </head>
+    <body>
+        <div>
+            <div>
+<FORM NAME="cityLatLong">
+    City:
+    <SELECT NAME="cities" onChange="updateCityLatLong(cityLatLong, cityLatLong.cities.selectedIndex);">
+        <SCRIPT LANGUAGE="JavaScript">
+        for (i = 0; i < City.length; i++) {
+              if(City[i].name == "Boulder, CO") {
+                  document.writeln("<OPTION SELECTED>" + City[i].name);
+                  }
+              else
+                  document.writeln("<OPTION>" + City[i].name);
+              }
+        </SCRIPT>
+    </SELECT><br />
+    Latitude Degrees: <INPUT TYPE="text" NAME="latDeg" VALUE="40" SIZE="4"><br />
+    Latitude Minutes: <INPUT TYPE="text" NAME="latMin" VALUE="7" SIZE="4"><br />
+    Latitude Seconds: <INPUT TYPE="text" NAME="latSec" VALUE="30" SIZE="4"><br />
+    Longitude Degrees: <INPUT TYPE="text" NAME="lonDeg" VALUE="105" SIZE="4"><br />
+    Longitude Minutes: <INPUT TYPE="text" NAME="lonMin" VALUE="14" SIZE="4"><br />
+    Longitude Seconds: <INPUT TYPE="text" NAME="lonSec" VALUE="13" SIZE="4"><br />
+    Offset to UTC: <INPUT TYPE="text" NAME="hrsToGMT" VALUE="7" SIZE="5"><br />
+    DST:
+    <SELECT NAME="dayAns" onChange="solarDateTimeLatLongInput(riseSetCalc, cityLatLong, cityLatLong.dayAns.selectedIndex);calcSun(riseSetCalc);riseSetFormOutput(riseSetCalc);">
+        <SCRIPT LANGUAGE="JavaScript">
+        for(i=0; i < YesNo.length; i++) {
+              document.writeln("<OPTION>" + YesNo[i].daySave);
+              }
+        </SCRIPT>
+    </SELECT>
+</FORM>
+<FORM NAME="riseSetCalc">
+    <SELECT NAME="mos" onChange="solarDateTimeLatLongInput(riseSetCalc, cityLatLong, cityLatLong.dayAns.selectedIndex);calcSun(riseSetCalc);riseSetFormOutput(riseSetCalc);">
+        <SCRIPT LANGUAGE="JavaScript">
+            dateObj1 = new Date();
+                thismonth = dateObj1.getMonth();
+                today = dateObj1.getDate();
+                for (i = 0; i < monthList.length; i++) {
+                  if (i == thismonth) {
+                      document.writeln("<OPTION SELECTED>" + monthList[i].name);
+                  }
+                  else {
+                      document.writeln("<OPTION>" + monthList[i].name);
+                  }
+              }
+        </SCRIPT>
+    </SELECT>
+    <SCRIPT LANGUAGE="JavaScript">
+        dateObj2 = new Date();
+        thisday = dateObj2.getDate();
+        document.writeln("<INPUT TYPE=\"text\" NAME=\"day\" SIZE=\"2\" VALUE=\"" + thisday + "\">");
+        dateObj3 = new Date();
+        thisYear = dateObj3.getYear();
+        if(thisYear <=199) {
+            thisYear=(thisYear*1)+1900;
+        }
+        document.writeln("<INPUT TYPE=\"text\" NAME=\"year\" SIZE=\"4\"VALUE=\"" + thisYear*1 + "\">");
+    </SCRIPT>
+    <br />
+    <INPUT TYPE="button" NAME="RiseSet" VALUE="Calculate Sunrise/Sunset" onClick="solarDateTimeLatLongInput(riseSetCalc, cityLatLong, cityLatLong.dayAns.selectedIndex);calcSun(riseSetCalc);riseSetFormOutput(riseSetCalc);">
+    <br />
+    Equation of Time: <INPUT TYPE="text" NAME="eqTime" SIZE = "8"><br />
+    Solar Declination: <INPUT TYPE="text" NAME="solarDec" SIZE = "8"><br />
+    Apparent Sunrise: <INPUT TYPE="text" NAME="sunrise" SIZE="13"><br />
+    Apparent Solar Noon: <INPUT TYPE="text" NAME="solnoon" SIZE="8"><br />
+    Apparent Sunset: <INPUT TYPE="text" NAME="sunset" SIZE="13"><br />
+    <!-- <INPUT TYPE="text" NAME="dbug" SIZE="15"><br /> -->
+    Apparent Sunrise UTC: <INPUT TYPE="text" NAME="utcsunrise" SIZE="13"><br />
+    Apparent Solar Noon UTC: <INPUT TYPE="text" NAME="utcsolnoon" SIZE="8"><br />
+    Apparent Sunset UTC: <INPUT TYPE="text" NAME="utcsunset" SIZE="13"><br />
+</FORM>
+            </div>
+            <footer>
+                <p>
+                    &copy; Copyright by theneonlobster
+                </p>
+            </footer>
+        </div>
+    </body>
+</html>
